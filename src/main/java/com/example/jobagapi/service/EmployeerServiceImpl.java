@@ -20,9 +20,9 @@ public class EmployeerServiceImpl implements EmployeerService {
 
     @Autowired
     private EmployeerRepository employeerRepository;
-
     @Autowired
     UserRepository userRepository;
+
     @Override
     public Page<Employeer> getAllEmployeers(Pageable pageable) {
         return employeerRepository.findAll(pageable);
