@@ -11,7 +11,7 @@ import java.util.Date;
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "postulants")
-public class Postulant extends User{
+public class Postulant extends User {
     private String civil_status;
 
     public Postulant(){
