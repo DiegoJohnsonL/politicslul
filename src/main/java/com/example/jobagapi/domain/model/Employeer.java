@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 @OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name = "employeers")
-public class Employeer extends User{
+public class Employeer extends User {
         private String posicion;
 
         public Employeer(){
@@ -26,7 +26,6 @@ public class Employeer extends User{
         public String getPosicion() {
                 return posicion;
         }
-
         public Employeer setPosicion(String posicion) {
                 this.posicion = posicion;
                 return this;

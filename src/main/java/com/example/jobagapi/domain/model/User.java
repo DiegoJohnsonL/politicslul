@@ -1,10 +1,5 @@
 package com.example.jobagapi.domain.model;
 
-import org.apache.logging.log4j.message.Message;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,20 +7,15 @@ import javax.validation.constraints.NotNull;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-public class User extends AuditModel{
+public class User extends AuditModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotNull
     private String firstname;
     @NotNull
     private String lastname;
-
-
-
-
-
     @NotNull
     private String email;
     @NotNull
@@ -33,12 +23,13 @@ public class User extends AuditModel{
     @NotNull
     private String password;
     private String document;
-    public User (){
+
+    public User() {
         super();
     }
 
-    public User(Long id,  @NotNull String firstname,  @NotNull String lastname,  @NotNull String email, @NotNull Long number, @NotNull String password, String document) {
-       super();
+    public User(Long id, @NotNull String firstname, @NotNull String lastname, @NotNull String email, @NotNull Long number, @NotNull String password, String document) {
+        super();
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;

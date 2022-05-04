@@ -1,5 +1,6 @@
 package com.example.jobagapi.domain.model;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "jobOffers")
+@NoArgsConstructor
 public class JobOffer extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

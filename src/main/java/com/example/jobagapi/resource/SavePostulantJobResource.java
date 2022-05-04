@@ -1,7 +1,16 @@
 package com.example.jobagapi.resource;
 
 public class SavePostulantJobResource {
+
     private boolean aceppt;
+
+    public SavePostulantJobResource(boolean aceppt) {
+        this.aceppt = aceppt;
+    }
+
+    public SavePostulantJobResource() {
+
+    }
 
     public boolean isAceppt() {
         return aceppt;
