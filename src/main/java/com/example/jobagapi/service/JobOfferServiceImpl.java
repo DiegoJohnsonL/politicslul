@@ -4,6 +4,7 @@ import com.example.jobagapi.domain.model.JobOffer;
 import com.example.jobagapi.domain.repository.EmployeerRepository;
 import com.example.jobagapi.domain.repository.JobOfferRepository;
 import com.example.jobagapi.domain.service.JobOfferService;
+import com.example.jobagapi.exception.ResourceIncorrectData;
 import com.example.jobagapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public JobOffer createJobOffer(Long employeerId, JobOffer jobOffer) {
         if(jobOffer.getSalary()<930)
-            throw  new ResourceNotFoundException("El salario debe ser mayor o igual a 930");
+            throw  new ResourceIncorrectData("El salario debe ser mayor o igual a 930");
         return employeerRepository.findById(employeerId).map(employeer -> {
             jobOffer.setEmployeer(employeer);
             return jobOfferRepository.save(jobOffer);

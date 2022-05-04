@@ -13,7 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InterviewImpl  implements InterviewService {
+public class InterviewImpl implements InterviewService {
+
     @Autowired
     private PostulantRepository postulantRepository;
     @Autowired
@@ -23,16 +24,8 @@ public class InterviewImpl  implements InterviewService {
 
     @Override
     public Interview createInterview(Long postulantId, Long jobOfferId, Interview interview) {
-        if(interviewRepository.existsByPostulantId(postulantId) && interviewRepository.existsByJobOfferId(jobOfferId))
-            throw  new ResourceNotFoundException("El postulante ya tiene programado una entrevista con la oferta de trabajo");
-
-        //Compruebo que exista el postulant
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
-
-            // Comprobar si exisite el joboffer
-        else if (!jobOfferRepository.existsById(jobOfferId))
-            throw new ResourceNotFoundException("Job Offer","Id", jobOfferId);
+        if (interviewRepository.existsByPostulantId(postulantId) && interviewRepository.existsByJobOfferId(jobOfferId))
+            throw new ResourceNotFoundException("El postulante ya tiene programado una entrevista con la oferta de trabajo");
 
         return postulantRepository.findById(postulantId).map(postulant -> {
             interview.setPostulant(postulant);
@@ -48,26 +41,26 @@ public class InterviewImpl  implements InterviewService {
     @Override
     public Interview updateInterview(Long postulantId, Long jobOfferId, Interview interviewDetails) {
         //Compruebo que exista el postulant
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
+        if (!postulantRepository.existsById(postulantId))
+            throw new ResourceNotFoundException("Postulant", "Id", postulantId);
         else if (!jobOfferRepository.existsById(jobOfferId))
-            throw new ResourceNotFoundException("Job Offer","Id", jobOfferId);
+            throw new ResourceNotFoundException("Job Offer", "Id", jobOfferId);
 
         return interviewRepository.findByPostulantIdAndJobOfferId(postulantId, jobOfferId).map(interview -> {
             interview.setDate_Interview(interviewDetails.getDate_Interview())
                     .setLink_Interview(interviewDetails.getLink_Interview())
                     .setLink_Interview(interviewDetails.getLink_Interview());
-            return  interviewRepository.save(interview);
+            return interviewRepository.save(interview);
         }).orElseThrow(() -> new ResourceNotFoundException("Postulant Id" + postulantId + "Job Offer Id" + jobOfferId));
     }
 
     @Override
     public ResponseEntity<?> deleteInterview(Long postulantId, Long jobOfferId) {
         //Compruebo que exista el postulant
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
+        if (!postulantRepository.existsById(postulantId))
+            throw new ResourceNotFoundException("Postulant", "Id", postulantId);
         else if (!jobOfferRepository.existsById(jobOfferId))
-            throw new ResourceNotFoundException("Job Offer","Id", jobOfferId);
+            throw new ResourceNotFoundException("Job Offer", "Id", jobOfferId);
 
         return interviewRepository.findByPostulantIdAndJobOfferId(postulantId, jobOfferId).map(interview -> {
             interviewRepository.delete(interview);
@@ -83,12 +76,12 @@ public class InterviewImpl  implements InterviewService {
 
     @Override
     public Page<Interview> getAllInterviewsByPostulantId(Long postulantId, Pageable pageable) {
-        return interviewRepository.findByPostulantId(postulantId,pageable);
+        return interviewRepository.findByPostulantId(postulantId, pageable);
     }
 
     @Override
     public Page<Interview> getAllInterviewsByJobOfferId(Long jobOfferId, Pageable pageable) {
-        return interviewRepository.findByJobOfferId(jobOfferId,pageable);
+        return interviewRepository.findByJobOfferId(jobOfferId, pageable);
     }
 
     @Override

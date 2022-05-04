@@ -26,14 +26,13 @@ public class PostulantJobController {
     @Autowired
     private ModelMapper mapper;
 
-
     @Operation(summary="Postulant Jobs", description="Create postulantjobs",  tags={"postulant_jobs"})
     @PostMapping("/postulants/{postulantId}/joboffers/{jobofferId}/postulantjobs")
     public PostulantJobResource createJobOffer(
             @PathVariable Long postulantId,
             @PathVariable Long jobofferId,
             @Valid @RequestBody SavePostulantJobResource resource) {
-        return convertToResource(postulantJobService.createPostulantJob(postulantId,jobofferId,convertToEntity(resource)));
+        return convertToResource(postulantJobService.createPostulantJob(postulantId,jobofferId, convertToEntity(resource)));
     }
 
     @Operation(summary="Put Postulant Jobs", description="Update postulantjobs",  tags={"postulant_jobs"})

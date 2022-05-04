@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class PostulantController {
     @Autowired
@@ -29,10 +29,9 @@ public class PostulantController {
     private ModelMapper mapper;
 
 
-
-    @Operation(summary="Get Postulants", description="Get All Postulants", tags={"postulants"})
+    @Operation(summary = "Get Postulants", description = "Get All Postulants", tags = {"postulants"})
     @GetMapping("/postulants")
-    public Page<PostulantResource> getAllPostulants(Pageable pageable){
+    public Page<PostulantResource> getAllPostulants(Pageable pageable) {
         Page<Postulant> postulantPage = postulantService.getAllPostulants(pageable);
         List<PostulantResource> resources = postulantPage.getContent()
                 .stream()
@@ -41,44 +40,33 @@ public class PostulantController {
 
         return new PageImpl<>(resources, pageable, resources.size());
     }
-    @Operation(summary="Post Postulants", description="Create Postulants", tags={"postulants"})
+
+    @Operation(summary = "Post Postulants", description = "Create Postulants", tags = {"postulants"})
     @PostMapping("/postulants")
     public PostulantResource createPostulant(@Valid @RequestBody SavePostulantResource resource) {
         Postulant postulant = convertToEntity(resource);
         return convertToResource(postulantService.createPostulant(postulant));
     }
 
-    @Operation(summary="Get PostulantsById", description="Get PostulantsById", tags={"postulants"})
+    @Operation(summary = "Get PostulantsById", description = "Get PostulantsById", tags = {"postulants"})
     @GetMapping("/postulants/{id}")
     public PostulantResource getPostulantById(@PathVariable(name = "id") Long postulantId) {
         return convertToResource(postulantService.getPostulantById(postulantId));
     }
 
-    @Operation(summary="Delete Postulant By Id", description="DeletePostulantById", tags={"postulants"})
-    @DeleteMapping("/postulants/{postulantId}}")
-
+    @Operation(summary = "Delete Postulant By Id", description = "DeletePostulantById", tags = {"postulants"})
+    @DeleteMapping("/postulants/{postulantId}")
     public ResponseEntity<?> deletePostulant(@PathVariable Long postulantId) {
         return postulantService.deletePostulant(postulantId);
     }
 
 
-
-
-
     private Postulant convertToEntity(SavePostulantResource resource) {
         return mapper.map(resource, Postulant.class);
     }
-    private PostulantResource convertToResource(Postulant entity)
-    {
+
+    private PostulantResource convertToResource(Postulant entity) {
         return mapper.map(entity, PostulantResource.class);
     }
-
-
-
-
-
-
-
-
 
 }

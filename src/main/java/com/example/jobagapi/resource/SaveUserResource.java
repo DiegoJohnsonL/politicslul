@@ -4,28 +4,24 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 public class SaveUserResource {
+
     @NotNull
     private String firstname;
-
     @NotNull
     private String lastname;
 
     @Column(unique = true)
     @NotNull
     private String email;
-
     @NotNull
     private Long number;
-
     @NotNull
     private String password;
-
     private String document;
 
     public SaveUserResource (){
         super();
     }
-
 
     public SaveUserResource(@NotNull String firstname,  @NotNull String lastname,  @NotNull String email, @NotNull Long number, @NotNull String password, String document) {
         super();

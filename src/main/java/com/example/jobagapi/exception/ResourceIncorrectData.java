@@ -3,8 +3,8 @@ package com.example.jobagapi.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.IM_USED)
-public class ResourceIncorrectData  extends RuntimeException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class ResourceIncorrectData extends RuntimeException {
 
     public ResourceIncorrectData() {
         super();

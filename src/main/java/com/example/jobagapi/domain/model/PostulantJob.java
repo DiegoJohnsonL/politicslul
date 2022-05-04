@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "postulantjob")
-public class PostulantJob extends AuditModel{
+public class PostulantJob extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +23,17 @@ public class PostulantJob extends AuditModel{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private JobOffer jobOffer;
 
+    public PostulantJob(Long id, Postulant postulant, JobOffer jobOffer, boolean aceppt) {
+        this.id = id;
+        this.postulant = postulant;
+        this.jobOffer = jobOffer;
+        this.aceppt = aceppt;
+    }
+
+    public boolean isAceppt() {
+        return aceppt;
+    }
+
     //Variable booleano
     @NotNull
     private boolean aceppt;
@@ -33,7 +44,6 @@ public class PostulantJob extends AuditModel{
     public PostulantJob(boolean aceppt) {
         this.aceppt = aceppt;
     }
-
 
     public Long getId() {
         return id;
@@ -62,9 +72,6 @@ public class PostulantJob extends AuditModel{
         return this;
     }
 
-    public boolean isAceppt() {
-        return aceppt;
-    }
 
     public PostulantJob setAceppt(boolean aceppt) {
         this.aceppt = aceppt;

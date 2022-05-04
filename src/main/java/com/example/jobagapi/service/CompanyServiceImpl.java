@@ -27,14 +27,15 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company createCompany(Long employeerId, Long sectorId, Company company) {
-        if (companyRepository.existsByEmployeerId(employeerId))
-            throw  new ResourceNotFoundException("La compania ya fue registrado por el empleador");
 
-        if(!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+        if (companyRepository.existsByEmployeerId(employeerId))
+            throw new ResourceNotFoundException("La compania ya fue registrado por el empleador");
+
+        if (!employeerRepository.existsById(employeerId))
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         else if (!sectorRepository.existsById(sectorId))
-            throw new ResourceNotFoundException("Sector","Id", sectorId);
+            throw new ResourceNotFoundException("Sector", "Id", sectorId);
 
         return employeerRepository.findById(employeerId).map(employeer -> {
             company.setEmployeer(employeer);
@@ -49,13 +50,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company updateCompany(Long employeerId, Long sectorId, Company companyRequest) {
 
-        if(!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+        if (!employeerRepository.existsById(employeerId))
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         else if (!sectorRepository.existsById(sectorId))
-            throw new ResourceNotFoundException("Sector","Id", sectorId);
+            throw new ResourceNotFoundException("Sector", "Id", sectorId);
 
-        return companyRepository.findByEmployeerIdAndSectorId(employeerId,sectorId).map(company -> {
+        return companyRepository.findByEmployeerIdAndSectorId(employeerId, sectorId).map(company -> {
             company.setName(companyRequest.getName())
                     .setDireccion(companyRequest.getDireccion())
                     .setRuc(companyRequest.getRuc())
@@ -68,16 +69,16 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseEntity<?> deleteCompany(Long employeerId, Long sectorId) {
 
-        if(!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+        if (!employeerRepository.existsById(employeerId))
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         else if (!sectorRepository.existsById(sectorId))
-            throw new ResourceNotFoundException("Sector","Id", sectorId);
+            throw new ResourceNotFoundException("Sector", "Id", sectorId);
 
-        return companyRepository.findByEmployeerIdAndSectorId(employeerId,sectorId).map(company -> {
+        return companyRepository.findByEmployeerIdAndSectorId(employeerId, sectorId).map(company -> {
             companyRepository.delete(company);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Employeer Id" +  employeerId + "Sector Id" + sectorId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Employeer Id" + employeerId + "Sector Id" + sectorId));
     }
 
     @Override

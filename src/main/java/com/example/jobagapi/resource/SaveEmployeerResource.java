@@ -2,11 +2,9 @@ package com.example.jobagapi.resource;
 
 import javax.validation.constraints.NotNull;
 
-public class SaveEmployeerResource extends SaveUserResource{
+public class SaveEmployeerResource extends SaveUserResource {
     @NotNull
-    public String posicion;
-
-
+    private String posicion;
 
     public String getPosicion() {
         return posicion;
@@ -17,7 +15,7 @@ public class SaveEmployeerResource extends SaveUserResource{
         return this;
     }
 
-    public SaveEmployeerResource(){
+    public SaveEmployeerResource() {
         super();
     }
 
