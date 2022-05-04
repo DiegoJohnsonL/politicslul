@@ -1,13 +1,10 @@
 package com.example.jobagapi.resource;
 
-import com.example.jobagapi.domain.model.AuditModel;
-
 import javax.validation.constraints.NotNull;
 
 public class EmployeerResource extends UserResource {
 
-
-    public String posicion;
+    private String posicion;
 
     public String getPosicion() {
         return posicion;

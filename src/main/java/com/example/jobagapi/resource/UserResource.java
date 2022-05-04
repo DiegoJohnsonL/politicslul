@@ -6,32 +6,24 @@ import javax.validation.constraints.NotNull;
 public class UserResource {
 
     private Long id;
-
-
     @NotNull
     private String firstname;
-
     @NotNull
     private String lastname;
-
     @Column(unique = true)
     @NotNull
     private String email;
-
     @NotNull
     private Long number;
-
     @NotNull
     private String password;
-
     private String document;
 
-    public UserResource (){
-        super();
+    public UserResource() {
     }
 
 
-    public UserResource(Long id,  @NotNull String firstname,  @NotNull String lastname,  @NotNull String email, @NotNull Long number, @NotNull String password, String document) {
+    public UserResource(Long id, @NotNull String firstname, @NotNull String lastname, @NotNull String email, @NotNull Long number, @NotNull String password, String document) {
         super();
         this.id = id;
         this.firstname = firstname;

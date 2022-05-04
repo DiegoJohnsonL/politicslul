@@ -23,6 +23,29 @@ public class PostulantJobResource {
     private Long salaryJobOffer;
     private String directionJobOffer;
 
+    public PostulantJobResource() {
+    }
+
+    public PostulantJobResource(Long id, boolean aceppt, Long idPostulant, String firstnamePostulant, String lastnamePostulant, String emailPostulant, Long numberPostulant, String passwordPostulant, String documentPostulant, Long idJobOffer, String typeJobOffer, String titleJobOffer, String descriptionJobOffer, LocalDate begin_date_offerJobOffer, LocalDate final_date_offerJobOffer, Long salaryJobOffer, String directionJobOffer) {
+        this.id = id;
+        this.aceppt = aceppt;
+        this.idPostulant = idPostulant;
+        this.firstnamePostulant = firstnamePostulant;
+        this.lastnamePostulant = lastnamePostulant;
+        this.emailPostulant = emailPostulant;
+        this.numberPostulant = numberPostulant;
+        this.passwordPostulant = passwordPostulant;
+        this.documentPostulant = documentPostulant;
+        this.idJobOffer = idJobOffer;
+        this.typeJobOffer = typeJobOffer;
+        this.titleJobOffer = titleJobOffer;
+        this.descriptionJobOffer = descriptionJobOffer;
+        this.begin_date_offerJobOffer = begin_date_offerJobOffer;
+        this.final_date_offerJobOffer = final_date_offerJobOffer;
+        this.salaryJobOffer = salaryJobOffer;
+        this.directionJobOffer = directionJobOffer;
+    }
+
     public Long getId() {
         return id;
     }
