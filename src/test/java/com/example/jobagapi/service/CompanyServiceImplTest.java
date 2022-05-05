@@ -3,10 +3,12 @@ package com.example.jobagapi.service;
 import com.example.jobagapi.domain.model.Interview;
 import com.example.jobagapi.domain.model.JobOffer;
 import com.example.jobagapi.domain.model.Postulant;
+import com.example.jobagapi.domain.model.Sector;
 import com.example.jobagapi.domain.repository.InterviewRepository;
 import com.example.jobagapi.domain.repository.JobOfferRepository;
 import com.example.jobagapi.domain.repository.PostulantRepository;
 import com.example.jobagapi.domain.model.Company;
+import com.example.jobagapi.domain.model.Employeer;
 import com.example.jobagapi.domain.repository.CompanyRepository;
 import com.example.jobagapi.domain.repository.EmployeerRepository;
 import com.example.jobagapi.domain.repository.SectorRepository;
@@ -56,15 +58,16 @@ public class CompanyServiceImplTest {
     private SectorRepository sectorRepository;
     @MockBean
     private CompanyRepository companyRepository;
-    @MockBean
+    @Autowired
     private CompanyService companyService;
 
     @Test
     public void createCompanyTest(){
-        Long employeerId = 1L;
-        Long sectorId = 1L;
+        Long employeerId=1L;
+        Long sectorId=1L;
         Employeer existingEmployeer = new Employeer();
         Sector existingSector = new Sector();
+
 
         given(companyRepository.existsByEmployeerId(employeerId)).willReturn(false);
         
@@ -76,7 +79,7 @@ public class CompanyServiceImplTest {
         given(companyRepository.save(any(Company.class))).willAnswer(i -> i.getArgument(0, Company.class));
 
         Company companyrequest = new Company();
-        Company actual = companyService.createCompany(employeerId, sectorId, companyrequest);
+        Company actual = companyService.createCompany(employeerId, sectorId ,companyrequest);
         //Then
         assertThat(actual.getSector()).isEqualTo(existingSector);
     }
