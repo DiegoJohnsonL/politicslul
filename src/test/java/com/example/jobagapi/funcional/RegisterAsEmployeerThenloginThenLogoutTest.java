@@ -60,15 +60,23 @@ public class RegisterAsEmployeerThenloginThenLogoutTest {
         driver.findElement(By.id("mat-input-8")).sendKeys(password); // password
         driver.findElement(By.cssSelector(".mat-focus-indicator")).click();
         wait.until(d -> d.findElement(By.id("mat-input-9")));
-        driver.findElement(By.id("mat-input-9")).click();
-        driver.findElement(By.id("mat-input-9")).sendKeys(email);
+        {
+            WebElement element = driver.findElement(By.cssSelector(".btn-registrarse"));
+            Actions builder = new Actions(driver);
+            builder.moveToElement(element).perform();
+        }
+        driver.findElement(By.cssSelector(".btn-registrarse")).click();
+        driver.get("https://cute-lolly-d05dcb.netlify.app/");
+        wait.until(d -> d.findElement(By.id("mat-input-0")));
+        driver.findElement(By.id("mat-input-0")).click();
+        driver.findElement(By.id("mat-input-0")).sendKeys(email);
         {
             WebElement element = driver.findElement(By.cssSelector(".btn-ingresar > .mat-button-wrapper"));
             Actions builder = new Actions(driver);
             builder.moveToElement(element).perform();
         }
-        driver.findElement(By.id("mat-input-9")).click();
-        driver.findElement(By.id("mat-input-10")).sendKeys(password);
+        driver.findElement(By.id("mat-input-0")).click();
+        driver.findElement(By.id("mat-input-1")).sendKeys(password);
         driver.findElement(By.cssSelector(".btn-ingresar > .mat-button-wrapper")).click();
         wait.until(d -> d.findElement(By.cssSelector(".user-logout > .mat-button-wrapper")));
         {
