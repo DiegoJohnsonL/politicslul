@@ -17,17 +17,18 @@ public class RegisterAsEmployeerThenloginThenLogoutTest {
 
   @Before
   public void setUp() {
-    System.setProperty("webdriver.chrome.driver", "D:\\Projects\\GitHub\\experimentosBack\\src\\test\\java\\com\\example\\jobagapi\\funcional\\drivers\\chromedriver-v101.exe");
+    System.setProperty("webdriver.chrome.driver", "src/test/java/com/example/jobagapi/funcional/drivers/chromedriver-v101.exe");
     driver = new ChromeDriver();
     wait = new WebDriverWait(driver, Duration.ofSeconds(5).getSeconds());
   }
   @After
   public void tearDown() {
+    driver.close();
     driver.quit();
   }
   @Test
   public void registerAsEmployeerThenloginThenLogout() throws InterruptedException {
-    String email = "test" + UUID.randomUUID().toString() + "@test.com";
+    String email = UUID.randomUUID()+ "@test.com";
     Random rnd = new Random();
     Long phone = (long) rnd.nextInt(999999999);
     driver.get("https://cute-lolly-d05dcb.netlify.app/");
@@ -53,6 +54,7 @@ public class RegisterAsEmployeerThenloginThenLogoutTest {
     driver.findElement(By.id("mat-input-7")).sendKeys(email);
     driver.findElement(By.id("mat-input-8")).sendKeys("test");
     driver.findElement(By.cssSelector(".mat-focus-indicator")).click();
+    wait.until(d -> d.findElement(By.id("mat-input-9")));
     driver.findElement(By.id("mat-input-9")).click();
     driver.findElement(By.id("mat-input-9")).sendKeys(email);
     {
@@ -60,9 +62,10 @@ public class RegisterAsEmployeerThenloginThenLogoutTest {
       Actions builder = new Actions(driver);
       builder.moveToElement(element).perform();
     }
+    driver.findElement(By.id("mat-input-9")).click();
     driver.findElement(By.id("mat-input-10")).sendKeys("test");
+    Thread.sleep(300);
     driver.findElement(By.cssSelector(".btn-ingresar > .mat-button-wrapper")).click();
-
     wait.until(d -> d.findElement(By.cssSelector(".user-logout > .mat-button-wrapper")));
     {
       WebElement element = driver.findElement(By.cssSelector(".user-logout > .mat-button-wrapper"));
