@@ -6,14 +6,7 @@ pipeline {
     }
 	
     stages {
-	        stage ('Clean Stage 2021-2') {
-
-            steps {
-                withMaven(maven : 'MAVEN_3_6_3') {
-                    bat 'mvn clean install'
-                }
-            }
-        }
+	      
         stage ('Compile Stage 2021-2') {
 
             steps {
