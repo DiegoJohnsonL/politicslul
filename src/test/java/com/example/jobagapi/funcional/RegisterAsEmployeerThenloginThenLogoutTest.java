@@ -69,7 +69,6 @@ public class RegisterAsEmployeerThenloginThenLogoutTest {
         }
         driver.findElement(By.id("mat-input-9")).click();
         driver.findElement(By.id("mat-input-10")).sendKeys(password);
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector(".btn-ingresar > .mat-button-wrapper")).click();
         wait.until(d -> d.findElement(By.cssSelector(".user-logout > .mat-button-wrapper")));
         {
