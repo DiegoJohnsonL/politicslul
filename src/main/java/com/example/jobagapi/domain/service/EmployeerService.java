@@ -14,4 +14,5 @@ public interface EmployeerService {
     Employeer getEmployeerById(Long employeerId);
     Employeer createEmployeer(Employeer employeer );
     ResponseEntity<?> deleteEmployeer(Long employeerId);
+    Employeer getByEmail(String email);
 }

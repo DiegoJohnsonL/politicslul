@@ -1,6 +1,8 @@
 package com.example.jobagapi.controller;
 
+import com.example.jobagapi.domain.model.Employeer;
 import com.example.jobagapi.domain.model.User;
+import com.example.jobagapi.resource.EmployeerResource;
 import com.example.jobagapi.resource.SaveUserResource;
 import com.example.jobagapi.resource.UserResource;
 import com.example.jobagapi.domain.service.UserService;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api")
 
@@ -29,9 +32,9 @@ public class UserController {
     @Autowired
     private ModelMapper mapper;
 
-    @Operation(summary="Get Users", description="Get All Users", tags={"users"})
+    @Operation(summary = "Get Users", description = "Get All Users", tags = {"users"})
     @GetMapping("/users")
-    public Page<UserResource> getAllUsers(Pageable pageable){
+    public Page<UserResource> getAllUsers(Pageable pageable) {
         Page<User> userPage = userService.getAllUsers(pageable);
         List<UserResource> resources = userPage.getContent()
                 .stream()
@@ -41,29 +44,33 @@ public class UserController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary="Update Users", description="Update Users", tags={"users"})
+    @Operation(summary = "Update Users", description = "Update Users", tags = {"users"})
     @PutMapping("/users/{userId}")
     public UserResource updateUser(@PathVariable Long userId, @Valid @RequestBody SaveUserResource resource) {
         User user = convertToEntity(resource);
         return convertToResource(userService.updateUser(userId, user));
     }
 
-@Operation(summary="Get UsersById", description="Get UsersById", tags={"users"})
+    @Operation(summary = "Get UsersById", description = "Get UsersById", tags = {"users"})
     @GetMapping("/users/{userId}")
     public UserResource getUserById(@PathVariable Long userId) {
         return convertToResource(userService.getUserById(userId));
     }
 
+    @Operation(summary = "Get User by email", description = "Get User by email", tags = {"users"})
+    @GetMapping("/users/email/{email}")
+    public UserResource getByEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+        return convertToResource(user);
+    }
 
     private User convertToEntity(SaveUserResource resource) {
         return mapper.map(resource, User.class);
     }
-    private UserResource convertToResource(User entity)
-    {
+
+    private UserResource convertToResource(User entity) {
         return mapper.map(entity, UserResource.class);
     }
-
-
 
 
 }

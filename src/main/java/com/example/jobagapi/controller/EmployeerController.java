@@ -46,6 +46,13 @@ public class EmployeerController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
+    @Operation(summary = "Get Employee by email", description = "Get Employeer by email", tags = {"employeers"})
+    @GetMapping("/employeers/email/{email}")
+    public EmployeerResource getByEmail(@PathVariable String email) {
+        Employeer employeer = employeerService.getByEmail(email);
+        return convertToResource(employeer);
+    }
+
     @Operation(summary = "Post Employeers", description = "Create Employeers", tags = {"employeers"})
     @PostMapping("/employeers")
     public EmployeerResource createEmployeer(@Valid @RequestBody SaveEmployeerResource resource) {
