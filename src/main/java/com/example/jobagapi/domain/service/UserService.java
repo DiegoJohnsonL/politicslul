@@ -12,4 +12,5 @@ public interface UserService {
     User getUserById(Long userId);
     User updateUser(Long userId, User userRequest);
     Boolean getByEmail(String email);
+    User findByEmail(String email);
 }
