@@ -67,13 +67,9 @@ public class CompanyServiceImplTest {
         Long sectorId=1L;
         Employeer existingEmployeer = new Employeer();
         Sector existingSector = new Sector();
-
-
         given(companyRepository.existsByEmployeerId(employeerId)).willReturn(false);
-        
-        given(!employeerRepository.existsById(employeerId)).willReturn(false);
-        given(!sectorRepository.existsById(sectorId)).willReturn(false);
-
+        given(employeerRepository.existsById(employeerId)).willReturn(true);
+        given(sectorRepository.existsById(sectorId)).willReturn(true);
         given(employeerRepository.findById(employeerId)).willReturn(Optional.of(existingEmployeer));
         given(sectorRepository.findById(sectorId)).willReturn(Optional.of(existingSector));
         given(companyRepository.save(any(Company.class))).willAnswer(i -> i.getArgument(0, Company.class));

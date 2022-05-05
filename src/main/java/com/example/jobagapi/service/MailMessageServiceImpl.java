@@ -26,46 +26,44 @@ public class MailMessageServiceImpl implements MailMessageService {
     @Override
     public MailMessage createMailMessage(Long postulantId, Long employeerId, MailMessage mailMessage) {
         //Comprobamos que exista el postulante
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
-        //Comprobamos que exista el employeer
+        if (!postulantRepository.existsById(postulantId))
+            throw new ResourceNotFoundException("Postulant", "Id", postulantId);
+            //Comprobamos que exista el employeer
         else if (!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         return postulantRepository.findById(postulantId).map(postulant -> {
             mailMessage.setPostulant(postulant);
-            employeerRepository.findById(employeerId).map(employeer -> {
-                mailMessage.setEmployeer(employeer);
-                return  mailMessageRepository.save(mailMessage);
-            }).orElseThrow(() -> new ResourceNotFoundException("Employeer", "Id", employeerId));
-            return  mailMessageRepository.save(mailMessage);
+            employeerRepository.findById(employeerId).map(employeer -> mailMessage.setEmployeer(employeer))
+                    .orElseThrow(() -> new ResourceNotFoundException("Employeer", "Id", employeerId));
+            return mailMessageRepository.save(mailMessage);
         }).orElseThrow(() -> new ResourceNotFoundException("Postulant", "Id", postulantId));
     }
 
     @Override
     public MailMessage updateMailMessage(Long postulantId, Long employeerId, Long mailMessageId, MailMessage mailMessageDetails) {
         //Comprobamos que exista el postulante
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
+        if (!postulantRepository.existsById(postulantId))
+            throw new ResourceNotFoundException("Postulant", "Id", postulantId);
             //Comprobamos que exista el employeer
         else if (!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         return mailMessageRepository.findById(mailMessageId).map(mailMessage -> {
             mailMessage.setMessage(mailMessageDetails.getMessage())
                     .setDocument_Link(mailMessageDetails.getDocument_Link());
-            return  mailMessageRepository.save(mailMessage);
+            return mailMessageRepository.save(mailMessage);
         }).orElseThrow(() -> new ResourceNotFoundException("Postulant Id" + postulantId + "Employeer Id" + employeerId));
     }
 
     @Override
     public ResponseEntity<?> deleteMailMessage(Long postulantId, Long employeerId, Long mailMessageId) {
         //Comprobamos que exista el postulante
-        if(!postulantRepository.existsById(postulantId))
-            throw new ResourceNotFoundException("Postulant","Id",postulantId);
-        //Comprobamos que exista el employeer
+        if (!postulantRepository.existsById(postulantId))
+            throw new ResourceNotFoundException("Postulant", "Id", postulantId);
+            //Comprobamos que exista el employeer
         else if (!employeerRepository.existsById(employeerId))
-            throw new ResourceNotFoundException("Employeer","Id",employeerId);
+            throw new ResourceNotFoundException("Employeer", "Id", employeerId);
 
         return mailMessageRepository.findById(mailMessageId).map(mailMessage -> {
             mailMessageRepository.delete(mailMessage);
@@ -75,7 +73,7 @@ public class MailMessageServiceImpl implements MailMessageService {
 
     @Override
     public Page<MailMessage> getAllMailMessagebByPostulantId(Long postulantId, Pageable pageable) {
-        return mailMessageRepository.findByPostulantId(postulantId,pageable);
+        return mailMessageRepository.findByPostulantId(postulantId, pageable);
     }
 
     @Override
@@ -85,7 +83,7 @@ public class MailMessageServiceImpl implements MailMessageService {
 
     @Override
     public Page<MailMessage> getAllMailMessagesByPostulantIdAnEmployeerId(Long postulantId, Long employeerId, Pageable pageable) {
-        return mailMessageRepository.findByPostulantIdAndEmployeerId(postulantId,employeerId,pageable);
+        return mailMessageRepository.findByPostulantIdAndEmployeerId(postulantId, employeerId, pageable);
     }
 
 }

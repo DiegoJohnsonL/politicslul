@@ -13,6 +13,7 @@ import com.example.jobagapi.domain.service.InterviewService;
 import com.example.jobagapi.domain.service.PostulantService;
 import com.example.jobagapi.domain.service.StudiesService;
 import com.example.jobagapi.exception.ResourceNotFoundException;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -57,26 +58,26 @@ public class MailMessageServicelmplTest{
     private MailMessageRepository mailMessageRepository;
     @MockBean
     private EmployeerRepository employeerRepository;
-    @MockBean
+    @Autowired
     private MailMessageService MailMessageService;
 
     @Test
     public void createMailMessageTest(){
         Long postulantId=1L;
         Long employeerId=1L;
-        Postulant existingPostulant = new Postulant();
-        Employeer existingEmployeer = new Employeer();
-        given(!postulantRepository.existsById(postulantId)).willReturn(false);
-        given(!employeerRepository.existsById(employeerId)).willReturn(false);
-
+        Postulant existingPostulant = (Postulant) new Postulant().setId(postulantId);
+        Employeer existingEmployeer = (Employeer) new Employeer().setId(employeerId);
+        given(postulantRepository.existsById(postulantId)).willReturn(true);
+        given(employeerRepository.existsById(employeerId)).willReturn(true);
         given(postulantRepository.findById(postulantId)).willReturn(Optional.of(existingPostulant));
         given(employeerRepository.findById(employeerId)).willReturn(Optional.of(existingEmployeer));
-
         given(mailMessageRepository.save(any(MailMessage.class))).willAnswer(i -> i.getArgument(0, MailMessage.class));
 
         MailMessage MailMessageRequest = new MailMessage();
         MailMessage actual = MailMessageService.createMailMessage(postulantId, employeerId, MailMessageRequest);
 
+        assertThat(actual.getPostulant()).isEqualTo(existingPostulant);
+        assertThat(actual.getEmployeer()).isEqualTo(existingEmployeer);
     }
 
     @Test //unhappy path
@@ -84,12 +85,10 @@ public class MailMessageServicelmplTest{
         Long postulantId=1L;
         Long employeerId=1L;       
         MailMessage MailMessageRequest = new MailMessage();
-        String  ExceptedMessage=" Registered Employeer";
-        given(!postulantRepository.existsById(postulantId)).willReturn(true);
-        given(!employeerRepository.existsById(employeerId)).willReturn(true);
-
+        String  ExceptedMessage="Resource Postulant not found for Id with value 1";
+        given(postulantRepository.existsById(postulantId)).willReturn(false);
+        given(employeerRepository.existsById(employeerId)).willReturn(false);
         Throwable throwable = catchThrowable(() -> MailMessageService.createMailMessage(postulantId, employeerId, MailMessageRequest));
-        
         assertThat(throwable)
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(ExceptedMessage);
