@@ -17,7 +17,7 @@ public class CreateJobTest {
 
   @Before
   public void setUp() {
-    System.setProperty("webdriver.chrome.driver", "src/test/java/com/example/jobagapi/funcional/drivers/chromedriver-v101.exe");
+    System.setProperty("webdriver.chrome.driver", "src/test/java/com/example/jobagapi/funcional/drivers/chromedriver-v103.exe");
     driver = new ChromeDriver();
     wait = new WebDriverWait(driver, Duration.ofSeconds(5).getSeconds());
   }
